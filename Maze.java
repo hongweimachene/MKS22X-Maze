@@ -65,6 +65,49 @@ public class Maze{
   }
 
   public int solve(){
-    
+    int row = 0;
+    int col = 0;
+    for (int i = 0; i < maze.length; i++){
+      for (int j = 0; j < maze[i].length; j++) {
+        if (maze[i][j] == 'S') {
+          row = i;
+          col = j;
+        }
+      }
+    }
+    return solve(row, col);
+  }
+
+  private void wait(int millis){
+    try {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException e) {
+    }
+  }
+
+  private int solve(int row, int col){
+    if(animate){
+      clearTerminal();
+      System.out.println(this);
+      wait(20);
+    }
+    int[][] moves = new int[][] {
+      
+    }
+
+
+    return -1;
+  }
+
+  private boolean placeAt(int row, int col) {
+    if (maze[row][col] == ' ') {
+      maze[row][col] = '@';
+      return true;
+    }
+    return false;
+  }
+  private void placeMark(int row, int col) {
+    maze[row][col] = '-';
   }
 }
