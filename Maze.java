@@ -35,7 +35,7 @@ public class Maze{
   public void setAnimate(boolean b) {
     animate = b;
   }
-  
+
   public void clearTerminal(){
     //erase terminal, go to top left of screen.
     System.out.println("\033[2J\033[1;1H");
@@ -62,5 +62,9 @@ public class Maze{
       s+="\n";
     }
     return s;
+  }
+
+  public int solve(){
+    
   }
 }
