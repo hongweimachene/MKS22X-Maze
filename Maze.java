@@ -4,32 +4,27 @@ import java.io.*;
 public class Maze{
   private char[][] maze;
   private boolean animate;
-  public Maze(String filename){
-    try {
-      File file = new File(filename);
-      Scanner dimensions = new Scanner(file);
-      int rows = 0;
-      int cols = 0;
-      while (dimensions.hasNextLine()) {
-        String line = dimensions.nextLine();
-        rows++;
-        cols = line.length();
-      }
-      maze = new char[rows][cols];
-      Scanner data = new Scanner(file);
-      int row = 0;
-      while (data.hasNextLine()){
-        String line = data.nextLine();
-        for (int i = 0; i < line.length(); i++){
-          maze[row][i] = line.charAt(i);
-        }
-        row++;
-      }
-      animate = false;
-    } catch (FileNotFoundException e) {
-      System.out.println("File not Found");
-      System.exit(1);
+  public Maze(String filename) throws FileNotFoundException{
+    File file = new File(filename);
+    Scanner dimensions = new Scanner(file);
+    int rows = 0;
+    int cols = 0;
+    while (dimensions.hasNextLine()) {
+      String line = dimensions.nextLine();
+      rows++;
+      cols = line.length();
     }
+    maze = new char[rows][cols];
+    Scanner data = new Scanner(file);
+    int row = 0;
+    while (data.hasNextLine()){
+      String line = data.nextLine();
+      for (int i = 0; i < line.length(); i++){
+        maze[row][i] = line.charAt(i);
+      }
+      row++;
+    }
+    animate = false;
   }
 
   public void setAnimate(boolean b) {
@@ -92,16 +87,30 @@ public class Maze{
       System.out.println(this);
       wait(20);
     }
+    if (maze[row][col] == 'E') {
+      int move = 0;
+      for (int i = 0; i < maze.length; i++) {
+        for (int j = 0; j < j[i].length; j++) {
+          if (maze[i][j] == '@') {
+            move++;
+          }
+        }
+      }
+      return move;
+    }
+
     int[][] moves = new int[][] {
       {row-1,col},
       {row+1,col},
       {row,col-1},
       {row,col+1}
     };
-    if (placeAt(row,col)){
+
+    if (placeAt(row, col)){
       for (int i = 0; i < moves.length; i++){
         solve(moves[i][0], moves[i][1]);
       }
+      placeDot(row, col);
     }
     return -1;
   }
@@ -113,8 +122,8 @@ public class Maze{
     }
     return false;
   }
-  private boolean placeMark(int row, int col) {
-    maze[row][col] = '-';
-    return false;
+
+  private void placeDot(int row, int col) {
+    maze[row][col] = '.';
   }
 }
