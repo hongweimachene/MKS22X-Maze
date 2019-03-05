@@ -110,20 +110,13 @@ public class Maze{
     if(animate){
       clearTerminal();
       System.out.println(this);
-      wait(20);
+      wait(150);
     }
+    int move = 0;
     if (maze[row][col] == 'E') {
-      // int move = 0;
-      // for (int h = 0; h < maze.length; h++) {
-      //   for (int j = 0; j < maze[h].length; j++) {
-      //     if (maze[h][j] == '@') {
-      //       move++;
-      //     }
-      //   }
-      // }
       return move;
     }
-    //operation of moves: up, down, left, right
+    //order of moves: up, down, left, right
     int[][] moves = new int[][] {
       {row-1,col},
       {row+1,col},
@@ -134,7 +127,10 @@ public class Maze{
     maze[row][col] = '@';
     for (int i = 0; i < moves.length; i++){
       if (placeAt(moves[i][0], moves[i][1])) {
-        solve(moves[i][0], moves[i][1], move+1);
+        move = solve(moves[i][0], moves[i][1]);
+        if (move != -1) {
+          return move+=1;
+        }
       }
     }
     //if four possible moves from that spot are not valid, places a '.' in its place
@@ -143,7 +139,7 @@ public class Maze{
     return -1;
   }
 
-  //places an '@' at a location
+  //see if its possible to place an '@' at a location
   private boolean placeAt(int row, int col) {
     if (maze[row][col] == ' ' || maze[row][col] == 'S' || maze[row][col] == 'E') {
       return true;
