@@ -112,20 +112,17 @@ public class Maze{
       System.out.println(this);
       wait(20);
     }
-
-    //base case, returns number of '@' in the maze
     if (maze[row][col] == 'E') {
-      int move = 0;
-      for (int i = 0; i < maze.length; i++) {
-        for (int j = 0; j < maze[i].length; j++) {
-          if (maze[i][j] == '@') {
-            move++;
-          }
-        }
-      }
+      // int move = 0;
+      // for (int h = 0; h < maze.length; h++) {
+      //   for (int j = 0; j < maze[h].length; j++) {
+      //     if (maze[h][j] == '@') {
+      //       move++;
+      //     }
+      //   }
+      // }
       return move;
     }
-
     //operation of moves: up, down, left, right
     int[][] moves = new int[][] {
       {row-1,col},
@@ -133,24 +130,22 @@ public class Maze{
       {row,col-1},
       {row,col+1}
     };
-
-    //if is placed, run through the four possible moves
-    if (placeAt(row, col)){
-      for (int i = 0; i < moves.length; i++){
-        solve(moves[i][0], moves[i][1]);
+    //run through the four possible moves
+    maze[row][col] = '@';
+    for (int i = 0; i < moves.length; i++){
+      if (placeAt(moves[i][0], moves[i][1])) {
+        solve(moves[i][0], moves[i][1], move+1);
       }
-      //if four possible moves from that spot are not valid, places a '.' in its place
-      placeDot(row, col);
     }
-
+    //if four possible moves from that spot are not valid, places a '.' in its place
+    placeDot(row, col);
     //if no solution, return -1
     return -1;
   }
 
   //places an '@' at a location
   private boolean placeAt(int row, int col) {
-    if (maze[row][col] == ' ') {
-      maze[row][col] = '@';
+    if (maze[row][col] == ' ' || maze[row][col] == 'S' || maze[row][col] == 'E') {
       return true;
     }
     return false;
