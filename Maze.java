@@ -93,10 +93,16 @@ public class Maze{
       wait(20);
     }
     int[][] moves = new int[][] {
-      
+      {row-1,col},
+      {row+1,col},
+      {row,col-1},
+      {row,col+1}
+    };
+    if (placeAt(row,col)){
+      for (int i = 0; i < moves.length; i++){
+        solve(moves[i][0], moves[i][1]);
+      }
     }
-
-
     return -1;
   }
 
@@ -107,7 +113,8 @@ public class Maze{
     }
     return false;
   }
-  private void placeMark(int row, int col) {
+  private boolean placeMark(int row, int col) {
     maze[row][col] = '-';
+    return false;
   }
 }
