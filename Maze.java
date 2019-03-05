@@ -132,7 +132,9 @@ public class Maze{
     maze[row][col] = '@';
     for (int i = 0; i < moves.length; i++){
       if (placeAt(moves[i][0], moves[i][1])) {
+        //if move is set to -1 that means the move that was made has no further moves and thus backtracks
         move = solve(moves[i][0], moves[i][1]);
+        //if move is successfully made, add 1 to move as it is the number of '@'
         if (move != -1) {
           return move+=1;
         }
@@ -141,7 +143,7 @@ public class Maze{
 
     //if four possible moves from that spot are not valid, places a '.' in its place
     placeDot(row, col);
-    
+
     //if no solution or no moves, return -1
     return -1;
   }
