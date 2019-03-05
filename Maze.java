@@ -112,10 +112,14 @@ public class Maze{
       System.out.println(this);
       wait(50);
     }
+    //number of '@'
     int move = 0;
+
+    //base case, reaching the end
     if (maze[row][col] == 'E') {
       return move;
     }
+
     //order of moves: up, down, left, right
     int[][] moves = new int[][] {
       {row-1,col},
@@ -123,6 +127,7 @@ public class Maze{
       {row,col-1},
       {row,col+1}
     };
+
     //run through the four possible moves
     maze[row][col] = '@';
     for (int i = 0; i < moves.length; i++){
@@ -133,8 +138,10 @@ public class Maze{
         }
       }
     }
+
     //if four possible moves from that spot are not valid, places a '.' in its place
     placeDot(row, col);
+    
     //if no solution or no moves, return -1
     return -1;
   }
