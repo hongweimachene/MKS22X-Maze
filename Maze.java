@@ -110,7 +110,7 @@ public class Maze{
     if(animate){
       clearTerminal();
       System.out.println(this);
-      wait(150);
+      wait(50);
     }
     int move = 0;
     if (maze[row][col] == 'E') {
@@ -135,7 +135,7 @@ public class Maze{
     }
     //if four possible moves from that spot are not valid, places a '.' in its place
     placeDot(row, col);
-    //if no solution, return -1
+    //if no solution or no moves, return -1
     return -1;
   }
 
