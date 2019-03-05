@@ -5,7 +5,7 @@ public class Maze{
 
   //instance variables
   private char[][] maze;
-  private boolean animate;
+  private boolean animate; //false by default
 
   /*Constructor loads a maze text file, and sets animate to false by default.
       When the file is not found then:
@@ -47,11 +47,22 @@ public class Maze{
     animate = b;
   }
 
+  private void wait(int millis){
+    try {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException e) {
+    }
+  }
+
   public void clearTerminal(){
     //erase terminal, go to top left of screen.
     System.out.println("\033[2J\033[1;1H");
   }
 
+  /*Return the string that represents the maze.
+     It should look like the text file with some characters replaced.
+  */
   public String toString() {
     String s = "";
     for (int i = 0; i < maze.length; i++) {
@@ -63,6 +74,10 @@ public class Maze{
     return s;
   }
 
+  /*Wrapper Solve Function returns the helper function
+      Note the helper function has the same name, but different parameters.
+      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
+  */
   public int solve(){
     int row = 0;
     int col = 0;
@@ -75,14 +90,6 @@ public class Maze{
       }
     }
     return solve(row, col);
-  }
-
-  private void wait(int millis){
-    try {
-      Thread.sleep(millis);
-    }
-    catch (InterruptedException e) {
-    }
   }
 
   /*
@@ -110,7 +117,7 @@ public class Maze{
     if (maze[row][col] == 'E') {
       int move = 0;
       for (int i = 0; i < maze.length; i++) {
-        for (int j = 0; j < j[i].length; j++) {
+        for (int j = 0; j < maze[i].length; j++) {
           if (maze[i][j] == '@') {
             move++;
           }
@@ -135,6 +142,7 @@ public class Maze{
       //if four possible moves from that spot are not valid, places a '.' in its place
       placeDot(row, col);
     }
+
     //if no solution, return -1
     return -1;
   }
@@ -148,7 +156,7 @@ public class Maze{
     return false;
   }
 
-  //places an '.' at a location 
+  //places an '.' at a location
   private void placeDot(int row, int col) {
     maze[row][col] = '.';
   }
